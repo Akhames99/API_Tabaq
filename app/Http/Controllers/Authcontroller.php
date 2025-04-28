@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Routing\Controller as BaseController; // Make sure this import is here
 
-
-class Authcontroller extends Controller
+class Authcontroller extends BaseController
 {
     public function register(Request $request) {
         $fields = $request->validate([
@@ -32,6 +32,7 @@ class Authcontroller extends Controller
     }
     
 
+    
     public function login(Request $request) {
 
         $request -> validate([
@@ -56,6 +57,7 @@ class Authcontroller extends Controller
         ];
 
     }
+    
 
     public function logout(Request $request) {
 

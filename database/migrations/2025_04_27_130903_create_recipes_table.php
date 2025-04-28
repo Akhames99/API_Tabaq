@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('recipes', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('password_hash');
             $table->string('name');
+            $table->text('description')->nullable();
+            $table->decimal('price', 10 , 2);
+            $table->string('image_url')->nullable();
+            $table->foreignId('cuisine_type_id')->nullable()->constrained('cuisine_types')->nullOnDelete();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('recipes');
     }
 };
