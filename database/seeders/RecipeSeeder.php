@@ -2,48 +2,107 @@
 
 namespace Database\Seeders;
 
-use App\Models\Recipe;
-use App\Models\Category;
 use Illuminate\Database\Seeder;
+use App\Models\Recipe;
 
 class RecipeSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        // Create some test recipes
         $recipes = [
             [
-                'name' => 'Pancakes',
-                'description' => 'Fluffy breakfast pancakes',
-                'price' => 9.99,
-                'image_url' => 'https://example.com/images/pancakes.jpg',
+                'name' => 'Spaghetti Bolognese',
+                'description' => 'Classic Italian pasta dish with rich meat sauce',
+                'price' => 20.23,
+                'image_url' => 'https://example.com/images/spaghetti_bolognese.jpg',
                 'cuisine_type_id' => 2, // Western
-                'categories' => [1] // Breakfast
+                'categories'=>[2]
+            ],
+            [
+                'name' => 'Chicken Stir Fry',
+                'description' => 'Quick and healthy Asian-inspired stir fry with vegetables',
+                'price' => 29.02,
+                'image_url' => 'https://example.com/images/chicken_stir_fry.jpg',
+                'cuisine_type_id' => 1, // Eastern
+                'categories'=>[2]
+            ],
+            [
+                'name' => 'Cheese Omelette',
+                'description' => 'Simple and delicious breakfast omelette with cheese',
+                'price' => 9.66,
+                'image_url' => 'https://example.com/images/cheese_omelette.jpg',
+                'cuisine_type_id' => 2, // Western
+                'categories'=>[1,3]
+            ],
+            [
+                'name' => 'Beef Shawarma',
+                'description' => 'Middle Eastern wrap with marinated beef and tahini sauce',
+                'price' => 30.23,
+                'image_url' => 'https://example.com/images/beef_shawarma.jpg',
+                'cuisine_type_id' => 1, // Eastern
+                'categories'=>[2]
             ],
             [
                 'name' => 'Caesar Salad',
-                'description' => 'Classic Caesar salad with croutons',
-                'price' => 12.99,
-                'image_url' => 'https://example.com/images/caesar-salad.jpg',
+                'description' => 'Classic salad with romaine lettuce, croutons, and Caesar dressing',
+                'price' => 8.44,
+                'image_url' => 'https://example.com/images/caesar_salad.jpg',
                 'cuisine_type_id' => 2, // Western
-                'categories' => [2] // Lunch
+                'categories'=>[1,3]
             ],
             [
-                'name' => 'Sushi Platter',
-                'description' => 'Assorted fresh sushi',
-                'price' => 24.99,
-                'image_url' => 'https://example.com/images/sushi.jpg',
+                'name' => 'Vegetable Biryani',
+                'description' => 'Fragrant rice dish with mixed vegetables and aromatic spices',
+                'price' => 6.21,
+                'image_url' => 'https://example.com/images/vegetable_biryani.jpg',
                 'cuisine_type_id' => 1, // Eastern
-                'categories' => [2, 3] // Lunch and Dinner
-            ]
+                'categories'=>[3]
+            ],
+            [
+                'name' => 'Mushroom Risotto',
+                'description' => 'Creamy Italian rice dish with mushrooms and Parmesan',
+                'price' => 11.88,
+                'image_url' => 'https://example.com/images/mushroom_risotto.jpg',
+                'cuisine_type_id' => 2, // Western
+                'categories'=>[1,3]
+            ],
+            [
+                'name' => 'Pad Thai',
+                'description' => 'Thai stir-fried noodles with egg, tofu, and peanuts',
+                'price' => 33,
+                'image_url' => 'https://example.com/images/pad_thai.jpg',
+                'cuisine_type_id' => 1, // Eastern
+                'categories'=>[2]
+            ],
+            [
+                'name' => 'Beef Burger',
+                'description' => 'Juicy beef patty with cheese and fresh vegetables',
+                'price' => 26.23,
+                'image_url' => 'https://example.com/images/beef_burger.jpg',
+                'cuisine_type_id' => 2, // Western
+                'categories'=>[2]
+            ],
+            [
+                'name' => 'Chicken Curry',
+                'description' => 'Aromatic curry with tender chicken pieces',
+                'price' => 27.63,
+                'image_url' => 'https://example.com/images/chicken_curry.jpg',
+                'cuisine_type_id' => 1, // Eastern
+                'categories'=>[2]
+            ],
         ];
 
         foreach ($recipes as $recipeData) {
-            $categories = $recipeData['categories'];
+            $categories = $recipeData['categories'] ?? [];
+        
+            // 🚀 IMPORTANT: remove 'categories' before calling create()
             unset($recipeData['categories']);
-            
+        
             $recipe = Recipe::create($recipeData);
-            $recipe->categories()->attach($categories);
-        }
+        
+            if (!empty($categories)) {
+                $recipe->categories()->attach($categories);
+            }
+        }                
     }
 }

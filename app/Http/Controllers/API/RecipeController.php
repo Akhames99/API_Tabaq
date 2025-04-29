@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Routing\Controller;
 use App\Models\Recipe;
+use App\Models\Ingredient;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -27,7 +28,7 @@ class RecipeController extends RoutingController
         $recipe->load(['categories', 'cuisineType']);
         return response()->json([
             'success' => true,
-            'data' => $recipe
+            'data' => $recipe->load('ingredients')
         ]);
     }
 
@@ -63,4 +64,45 @@ class RecipeController extends RoutingController
         ]);
 
     }
+
+    // Get ingredients for a specific recipe
+    public function getIngredients(Recipe $recipe)
+    {
+        return response()->json($recipe->ingredients);
+    }
+
+    // Add ingredients to a recipe
+    public function attachIngredients(Request $request, Recipe $recipe)
+    {
+        $validated = $request->validate([
+            'ingredients' => 'required|array',
+            'ingredients.*.id' => 'required|exists:ingredients,id',
+            'ingredients.*.quantity' => 'required|numeric',
+        ]);
+
+        $ingredients = collect($validated['ingredients'])->mapWithKeys(function ($item) {
+            return [$item['id'] => ['quantity' => $item['quantity']]];
+        });
+
+        $recipe->ingredients()->sync($ingredients);
+        return response()->json($recipe->load('ingredients'));
+    }
+
+    public function updateIngredient(Request $request, Recipe $recipe, Ingredient $ingredient)
+    {
+        $validated = $request->validate([
+            'quantity' => 'required|numeric',
+        ]);
+
+        $recipe->ingredients()->updateExistingPivot($ingredient->id, $validated);
+        return response()->json($recipe->ingredients()->where('ingredients.id', $ingredient->id)->first());
+    }
+
+
+    public function detachIngredient(Recipe $recipe, Ingredient $ingredient)
+    {
+        $recipe->ingredients()->detach($ingredient);
+        return response()->json(null, 204);
+    }
+
 }

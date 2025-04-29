@@ -9,14 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('recipe_category', function (Blueprint $table) {
+        Schema::create('recipe_ingredient', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('recipe_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->primary(['recipe_id', 'category_id']);
+            $table->foreignId('ingredient_id')->constrained()->onDelete('cascade');
+            $table->decimal('quantity', 10, 2);
             $table->timestamps();
-
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recipe_category');
+        Schema::dropIfExists('recipe_ingredient');
     }
 };

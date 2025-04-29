@@ -36,3 +36,8 @@ Route::get('/cuisine_types/{cuisineType}/recipes', [CuisineTypeController::class
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/filter', [RecipeController::class, 'filterByCategoryAndCuisine']);
 Route::get('/recipes/{recipe}', [RecipeController::class, 'show']);
+
+Route::get('recipes/{recipe}/ingredients', [RecipeController::class, 'getIngredients']);
+Route::post('recipes/{recipe}/ingredients', [RecipeController::class, 'attachIngredients']);
+Route::put('recipes/{recipe}/ingredients/{ingredient}', [RecipeController::class, 'updateIngredient']);
+Route::delete('recipes/{recipe}/ingredients/{ingredient}', [RecipeController::class, 'detachIngredient']);
