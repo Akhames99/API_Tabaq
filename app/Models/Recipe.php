@@ -34,4 +34,19 @@ class Recipe extends Model
                     ->withPivot('quantity')
                     ->withTimestamps();
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'recipe_id');
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        if ($this->reviews->isEmpty()) {
+            return null;
+        }
+        
+        return round($this->reviews->avg('rating'), 1);
+    }
+
 }

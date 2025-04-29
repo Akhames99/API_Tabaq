@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\CuisineTypeController;
 use App\Http\Controllers\API\RecipeController;
+use App\Http\Controllers\API\ReviewController;
+
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -37,7 +39,16 @@ Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/filter', [RecipeController::class, 'filterByCategoryAndCuisine']);
 Route::get('/recipes/{recipe}', [RecipeController::class, 'show']);
 
-Route::get('recipes/{recipe}/ingredients', [RecipeController::class, 'getIngredients']);
-Route::post('recipes/{recipe}/ingredients', [RecipeController::class, 'attachIngredients']);
-Route::put('recipes/{recipe}/ingredients/{ingredient}', [RecipeController::class, 'updateIngredient']);
-Route::delete('recipes/{recipe}/ingredients/{ingredient}', [RecipeController::class, 'detachIngredient']);
+Route::get('/recipes/{recipe}/ingredients', [RecipeController::class, 'getIngredients']);
+Route::post('/recipes/{recipe}/ingredients', [RecipeController::class, 'attachIngredients']);
+Route::put('/recipes/{recipe}/ingredients/{ingredient}', [RecipeController::class, 'updateIngredient']);
+Route::delete('/recipes/{recipe}/ingredients/{ingredient}', [RecipeController::class, 'detachIngredient']);
+
+//Reviews
+Route::post('/recipes/{recipe}/reviews', [ReviewController::class, 'store'])->middleware('auth:sanctum');
+
+Route::put('/reviews/{review}', [ReviewController::class, 'update'])->middleware('auth:sanctum');
+
+Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->middleware('auth:sanctum');
+
+Route::get('/recipes/{recipe}/average_rating', [ReviewController::class, 'averageRating']);

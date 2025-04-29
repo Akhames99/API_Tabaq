@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $fields = $request -> validate([
             'user_id' => 'required',
-            'email' => 'required',
+            'phone_number' => 'required',
             'password_hash' => 'required',
             'name' => 'required'
         ]);
@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         $fields = $request -> validate([
             'user_id' => 'required',
-            'email' => 'required',
+            'phone_number' => 'required',
             'password_hash' => 'required',
             'name' => 'required'
         ]);

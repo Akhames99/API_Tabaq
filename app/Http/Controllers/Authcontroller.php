@@ -13,13 +13,13 @@ class Authcontroller extends BaseController
     public function register(Request $request) {
         $fields = $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
+            'phone_number' => 'required|string|unique:users',
             'password' => 'required|confirmed'
         ]);
     
         $user = User::create([
             'name' => $fields['name'],
-            'email' => $fields['email'],
+            'phone_number' => $fields['phone_number'],
             'password_hash' => bcrypt($fields['password']) // <<-- Hash here
         ]);
     
@@ -36,12 +36,12 @@ class Authcontroller extends BaseController
     public function login(Request $request) {
 
         $request -> validate([
-            'email' => 'required|email|exists:users',
+            'phone_number' => 'required|string|exists:users',
             'password' => 'required'
         ]);
 
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('phone_number', $request->phone_number)->first();
 
         if (!$user || !Hash::check($request->password , $user->password_hash)) {
             return [

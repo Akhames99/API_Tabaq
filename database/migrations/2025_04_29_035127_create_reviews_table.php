@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('phone_number',11)->unique();
-            $table->string('password_hash');
-            $table->string('name');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('recipe_id')->constrained('recipes');
+            $table->integer('rating')->comment('User rating from 1-5');
             $table->timestamps();
+
+            $table->unique(['user_id', 'recipe_id']);
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('reviews');
     }
 };

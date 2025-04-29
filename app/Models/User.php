@@ -14,6 +14,11 @@ class User extends Model
 
     protected $table = 'users';
 
-    protected $fillable = ['email', 'password_hash', 'name'];
+    protected $fillable = ['phone_number', 'password_hash', 'name'];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'user_id');
+    }
 
 }
