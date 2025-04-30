@@ -51,7 +51,6 @@ Route::put('/reviews/{review}', [ReviewController::class, 'update'])->middleware
 Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->middleware('auth:sanctum');
 Route::get('/recipes/{recipe}/average_rating', [ReviewController::class, 'averageRating']);
 
-//Orders
 // Orders
 Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/orders', [OrderController::class, 'store'])->middleware('auth:sanctum');
