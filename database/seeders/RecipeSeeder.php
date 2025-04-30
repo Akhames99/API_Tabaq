@@ -11,82 +11,98 @@ class RecipeSeeder extends Seeder
     {
         $recipes = [
             [
-                'name' => 'Spaghetti Bolognese',
-                'description' => 'Classic Italian pasta dish with rich meat sauce',
-                'price' => 20.23,
-                'image_url' => 'https://example.com/images/spaghetti_bolognese.jpg',
+                'name' => 'سباغيتي مع قطع اللحم المفروم',
+                'description' => '',
+                'price' => 90,
+                'image_url' => 'https://drive.google.com/file/d/1BoWCSq8fvJosfY3MWNHICE_cfIGzmVae/view?usp=sharing',
                 'cuisine_type_id' => 2, // Western
                 'categories'=>[2]
             ],
             [
-                'name' => 'Chicken Stir Fry',
-                'description' => 'Quick and healthy Asian-inspired stir fry with vegetables',
-                'price' => 29.02,
-                'image_url' => 'https://example.com/images/chicken_stir_fry.jpg',
+                'name' => 'لحم بقري مشوي مع البطاطس والفلفل',
+                'description' => '',
+                'price' => 170,
+                'image_url' => 'https://drive.google.com/file/d/1wB-5H0dCWUVUdJW4GzCvSsEmVuXHyg-J/view?usp=sharing',
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],
             [
-                'name' => 'Cheese Omelette',
-                'description' => 'Simple and delicious breakfast omelette with cheese',
-                'price' => 9.66,
-                'image_url' => 'https://example.com/images/cheese_omelette.jpg',
-                'cuisine_type_id' => 2, // Western
-                'categories'=>[1,3]
+                'name' => 'لحم بقري مع فلفل رومي ملون',
+                'description' => '',
+                'price' => 190,
+                'image_url' => 'https://drive.google.com/file/d/1qNk63nA0kra_ygnPe8yrQ6ONBI9cDZYC/view?usp=sharing',
+                'cuisine_type_id' => 1, // Western
+                'categories'=>[2]
             ],
             [
-                'name' => 'Beef Shawarma',
-                'description' => 'Middle Eastern wrap with marinated beef and tahini sauce',
-                'price' => 30.23,
-                'image_url' => 'https://example.com/images/beef_shawarma.jpg',
+                'name' => 'لحم مشوي مع الفلفل (مطبخ آسيوي)',
+                'description' => '',
+                'price' => 120,
+                'image_url' => 'https://drive.google.com/file/d/1E9clqy73bc0ajvvT9P9s4cuaDqR7fr7X/view?usp=sharing',
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],
             [
-                'name' => 'Caesar Salad',
-                'description' => 'Classic salad with romaine lettuce, croutons, and Caesar dressing',
-                'price' => 8.44,
-                'image_url' => 'https://example.com/images/caesar_salad.jpg',
+                'name' => 'مكرونة بيني مع الدجاج وصلصة الطماطم',
+                'description' => '',
+                'price' => 65,
+                'image_url' => 'https://drive.google.com/file/d/1y_j0K_1tfmNs7UcHmgngLiBmspeTg-yr/view?usp=sharing',
                 'cuisine_type_id' => 2, // Western
-                'categories'=>[1,3]
+                'categories'=>[2,3]
             ],
             [
-                'name' => 'Vegetable Biryani',
-                'description' => 'Fragrant rice dish with mixed vegetables and aromatic spices',
-                'price' => 6.21,
-                'image_url' => 'https://example.com/images/vegetable_biryani.jpg',
+                'name' => 'سمك دورادو مخبوز مع الليمون وسلطة جاهزة',
+                'description' => '',
+                'price' => 95,
+                'image_url' => 'https://drive.google.com/file/d/1DnkabobbBD3l9stPjMGb1I_V6Pn310R0/view?usp=sharing',
                 'cuisine_type_id' => 1, // Eastern
-                'categories'=>[3]
+                'categories'=>[2,3]
             ],
             [
-                'name' => 'Mushroom Risotto',
-                'description' => 'Creamy Italian rice dish with mushrooms and Parmesan',
-                'price' => 11.88,
-                'image_url' => 'https://example.com/images/mushroom_risotto.jpg',
-                'cuisine_type_id' => 2, // Western
-                'categories'=>[1,3]
+                'name' => 'بطاطس مخبوزة مع البصل والثوم والأعشاب',
+                'description' => '',
+                'price' => 50,
+                'image_url' => 'https://drive.google.com/file/d/1_OgiIY2IkRtLwW8p7m71MJIs8o58PktL/view?usp=sharing',
+                'cuisine_type_id' => 1, // Western
+                'categories'=>[1,2,3]
             ],
             [
-                'name' => 'Pad Thai',
-                'description' => 'Thai stir-fried noodles with egg, tofu, and peanuts',
-                'price' => 33,
-                'image_url' => 'https://example.com/images/pad_thai.jpg',
+                'name' => 'كبد دجاج مقلي مع صلصة التوت البري',
+                'description' => '',
+                'price' => 70,
+                'image_url' => 'https://drive.google.com/file/d/1qlESWwlx7wYnNEwkxv-J4SA_SkH9SFhv/view?usp=sharing',
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],
             [
-                'name' => 'Beef Burger',
-                'description' => 'Juicy beef patty with cheese and fresh vegetables',
-                'price' => 26.23,
-                'image_url' => 'https://example.com/images/beef_burger.jpg',
-                'cuisine_type_id' => 2, // Western
+                'name' => 'أسياخ دجاج مع الفلفل الحلو والشبت',
+                'description' => '',
+                'price' => 105,
+                'image_url' => 'https://drive.google.com/file/d/1cfEL57dAJvzln94LKeszLDufMVpz-3J7/view?usp=sharing',
+                'cuisine_type_id' => 1, // Western
                 'categories'=>[2]
             ],
             [
-                'name' => 'Chicken Curry',
-                'description' => 'Aromatic curry with tender chicken pieces',
-                'price' => 27.63,
-                'image_url' => 'https://example.com/images/chicken_curry.jpg',
+                'name' => 'مكرونة بيني مع الدجاج وصلصة الطماطم',
+                'description' => '',
+                'price' => 60,
+                'image_url' => 'https://drive.google.com/file/d/1muEnIa8y-JEmuo7Pl29WqXUEPLNyROlK/view?usp=sharing',
+                'cuisine_type_id' => 1, // Eastern
+                'categories'=>[2]
+            ],
+            [
+                'name' => 'كباب نباتي بالخضروات مع صلصة الكاجو والبابريكا',
+                'description' => '',
+                'price' => 120,
+                'image_url' => 'https://drive.google.com/file/d/1o6XigRwSENN01_mleeLD2atphmMb_pZA/view?usp=sharing',
+                'cuisine_type_id' => 1, // Eastern
+                'categories'=>[2]
+            ],
+            [
+                'name' => 'تورتيلا ملفوفة بالفلافل والسلطة',
+                'description' => '',
+                'price' => 80,
+                'image_url' => 'https://drive.google.com/file/d/1PPIVUKgyDvB9rxqg2lIR18Fy3hVnerYi/view?usp=sharing',
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],

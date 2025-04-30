@@ -10,6 +10,7 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\CuisineTypeController;
 use App\Http\Controllers\API\RecipeController;
 use App\Http\Controllers\API\ReviewController;
+use App\Http\Controllers\API\OrderController;
 
 
 // Route::get('/user', function (Request $request) {
@@ -19,6 +20,7 @@ use App\Http\Controllers\API\ReviewController;
 // Correcting the route capitalization
 Route::apiResource('users', UserController::class);
 
+//Registration,Login and Logout
 Route::post('/register', [Authcontroller::class, 'register']);
 Route::post('/login', [Authcontroller::class, 'login']);
 Route::post('/logout', [Authcontroller::class, 'logout'])->middleware('auth:sanctum');
@@ -31,7 +33,6 @@ Route::get('/categories/{category}/recipes', [CategoryController::class, 'recipe
 // Cuisine Types
 Route::get('/cuisine_types', [CuisineTypeController::class, 'index']);
 Route::get('/cuisine_types/{cuisineType}', [CuisineTypeController::class, 'show']);
-// Correct method name
 Route::get('/cuisine_types/{cuisineType}/recipes', [CuisineTypeController::class, 'recipesInCuisineType']);
 
 // Recipes
@@ -46,9 +47,14 @@ Route::delete('/recipes/{recipe}/ingredients/{ingredient}', [RecipeController::c
 
 //Reviews
 Route::post('/recipes/{recipe}/reviews', [ReviewController::class, 'store'])->middleware('auth:sanctum');
-
 Route::put('/reviews/{review}', [ReviewController::class, 'update'])->middleware('auth:sanctum');
-
 Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->middleware('auth:sanctum');
-
 Route::get('/recipes/{recipe}/average_rating', [ReviewController::class, 'averageRating']);
+
+//Orders
+// Orders
+Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/orders', [OrderController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->middleware('auth:sanctum');
+Route::put('/orders/{order}', [OrderController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->middleware('auth:sanctum');

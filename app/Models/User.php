@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable; // ✅ This is required
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class User extends Model
+class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens , Notifiable , HasFactory;
+    use HasApiTokens, Notifiable, HasFactory;
 
     protected $table = 'users';
 
@@ -20,5 +20,4 @@ class User extends Model
     {
         return $this->hasMany(Review::class, 'user_id');
     }
-
 }

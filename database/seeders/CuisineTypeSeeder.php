@@ -10,8 +10,8 @@ class CuisineTypeSeeder extends Seeder
     public function run(): void
     {
         $cuisineTypes = [
-            ['name' => 'Eastern', 'description' => 'Cuisine from Eastern cultures'],
-            ['name' => 'Western', 'description' => 'Cuisine from Western cultures']
+            ['name' => 'شرقي', 'description' => 'أكلات من المطبخ الشرقية'],
+            ['name' => 'غربي', 'description' => 'أكلات من المطبخ الغربية']
         ];
 
         foreach ($cuisineTypes as $cuisineType) {

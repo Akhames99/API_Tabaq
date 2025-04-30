@@ -10,10 +10,10 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Breakfast', 'description' => 'Morning meals to start your day'],
-            ['name' => 'Lunch', 'description' => 'Midday meals for energy'],
-            ['name' => 'Dinner', 'description' => 'Evening meals for family gatherings'],
-            ['name' => 'Dessert', 'description' => 'Sweet treats to end your meal']
+            ['name' => 'افطار', 'description' => 'ابدأ يومك بأكله جميلة'],
+            ['name' => 'غداء', 'description' => 'جدد طاقتك بأكله حلوة'],
+            ['name' => 'عشاء', 'description' => 'جمع عيلتك علي أكله لطيفة'],
+            ['name' => 'تحليه', 'description' => 'حلي وادعيلي مع أكله ميري']
         ];
 
         foreach ($categories as $category) {
