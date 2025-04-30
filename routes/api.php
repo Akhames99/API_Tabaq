@@ -11,7 +11,7 @@ use App\Http\Controllers\API\CuisineTypeController;
 use App\Http\Controllers\API\RecipeController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\OrderController;
-
+use App\Http\Controllers\API\PaymentController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -57,3 +57,11 @@ Route::post('/orders', [OrderController::class, 'store'])->middleware('auth:sanc
 Route::get('/orders/{order}', [OrderController::class, 'show'])->middleware('auth:sanctum');
 Route::put('/orders/{order}', [OrderController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->middleware('auth:sanctum');
+
+// Payments
+Route::get('/payments', [PaymentController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/payments', [PaymentController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/payments/{payment}', [PaymentController::class, 'show'])->middleware('auth:sanctum');
+Route::put('/payments/{payment}', [PaymentController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/payments/{payment}', [PaymentController::class, 'destroy'])->middleware('auth:sanctum');
+Route::get('/payments/users/{user}', [PaymentController::class, 'getPaymentsByUser'])->middleware('auth:sanctum');
