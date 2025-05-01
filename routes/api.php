@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\Authcontroller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsersModelController;
@@ -8,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\CuisineTypeController;
+use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\API\RecipeController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\OrderController;
@@ -65,3 +67,16 @@ Route::get('/payments/{payment}', [PaymentController::class, 'show'])->middlewar
 Route::put('/payments/{payment}', [PaymentController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/payments/{payment}', [PaymentController::class, 'destroy'])->middleware('auth:sanctum');
 Route::get('/payments/users/{user}', [PaymentController::class, 'getPaymentsByUser'])->middleware('auth:sanctum');
+
+//favorites
+Route::get('/favorites', [FavoriteController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/favorites', [FavoriteController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/favorites/check/{recipe}', [FavoriteController::class, 'check'])->middleware('auth:sanctum');
+Route::delete('/favorites/{recipe}', [FavoriteController::class, 'destroy'])->middleware('auth:sanctum');
+
+//cart
+Route::get('/carts', [CartController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/carts', [CartController::class, 'store'])->middleware('auth:sanctum');
+Route::put('/carts/{cart}', [CartController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/carts/{cart}', [CartController::class, 'destroy'])->middleware('auth:sanctum');
+Route::delete('/carts', [CartController::class, 'clear'])->middleware('auth:sanctum');
