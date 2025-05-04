@@ -19,8 +19,11 @@ use App\Http\Controllers\API\PaymentController;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-// Correcting the route capitalization
+//users
 Route::apiResource('users', UserController::class);
+Route::get('/users', [Usercontroller::class, 'index'])->middleware('auth:sanctum');
+Route::post('/users/{user}', [Usercontroller::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/users/{user}', [Usercontroller::class, 'destroy'])->middleware('auth:sanctum');
 
 //Registration,Login and Logout
 Route::post('/register', [Authcontroller::class, 'register']);

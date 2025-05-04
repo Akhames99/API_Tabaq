@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -21,16 +22,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $fields = $request -> validate([
-            'user_id' => 'required',
-            'phone_number' => 'required',
-            'password_hash' => 'required',
-            'name' => 'required'
+        $fields = $request->validate([
+            'name' => 'required|max:255',
+            'phone_number' => 'required|string|unique:users',
+            'password' => 'required|confirmed'
         ]);
 
-        $user = User::create($fields);
+        $user = User::create([
+            'name' => $fields['name'],
+            'phone_number' => $fields['phone_number'],
+            'password_hash' => bcrypt($fields['password'])
+        ]);
+        
         return $user;
-
     }
 
     /**
@@ -46,15 +50,28 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $fields = $request -> validate([
-            'user_id' => 'required',
-            'phone_number' => 'required',
-            'password_hash' => 'required',
-            'name' => 'required'
+        $fields = $request->validate([
+            'name' => 'sometimes|max:255',
+            'phone_number' => 'sometimes|string|unique:users,phone_number,'.$user->id,
         ]);
 
-        $user-> update($fields);
-        return $user;
+        // Update the user with validated fields
+        $user->update($fields);
+
+        // Handle password update separately if provided
+        if ($request->has('password') && $request->filled('password')) {
+            $request->validate([
+                'password' => 'required|confirmed'
+            ]);
+            
+            $user->password_hash = bcrypt($request->password);
+            $user->save();
+        }
+
+        return [
+            'message' => 'User updated successfully',
+            'user' => $user
+        ];
     }
 
     /**
@@ -62,8 +79,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user -> delete();
+        // Delete user's tokens first to avoid foreign key constraint issues
+        $user->tokens()->delete();
+        
+        // Then delete the user
+        $user->delete();
 
-        return ['message' => 'the user is deleted.'];
+        return ['message' => 'User deleted successfully'];
     }
 }

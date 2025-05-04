@@ -12,10 +12,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('recipe_ingredient', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('recipe_id')->constrained()->onDelete('cascade');
             $table->foreignId('ingredient_id')->constrained()->onDelete('cascade');
             $table->decimal('quantity', 10, 2);
+            $table->primary(['recipe_id', 'ingredient_id']);
             $table->timestamps();
         });
     }
