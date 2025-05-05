@@ -22,6 +22,7 @@ use App\Http\Controllers\API\PaymentController;
 //users
 Route::apiResource('users', UserController::class);
 Route::get('/users', [Usercontroller::class, 'index'])->middleware('auth:sanctum');
+Route::get('/users/{user}', [Usercontroller::class, 'show'])->middleware('auth:sanctum');
 Route::post('/users/{user}', [Usercontroller::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/users/{user}', [Usercontroller::class, 'destroy'])->middleware('auth:sanctum');
 

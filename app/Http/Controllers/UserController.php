@@ -33,16 +33,29 @@ class UserController extends Controller
             'phone_number' => $fields['phone_number'],
             'password_hash' => bcrypt($fields['password'])
         ]);
-        
+
         return $user;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Request $request, User $user)
     {
-        return $user;
+        // Check if authenticated user is viewing their own profile
+        if ($request->user()->id !== $user->id) {
+            return response()->json([
+                'message' => 'Unauthorized to view this user'
+            ], 403);
+        }
+
+        // Create a new token for the user
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return [
+            'user' => $user,
+            'token' => $token
+        ];
     }
 
     /**
@@ -52,7 +65,7 @@ class UserController extends Controller
     {
         $fields = $request->validate([
             'name' => 'sometimes|max:255',
-            'phone_number' => 'sometimes|string|unique:users,phone_number,'.$user->id,
+            'phone_number' => 'sometimes|string|unique:users,phone_number,' . $user->id,
         ]);
 
         // Update the user with validated fields
@@ -63,7 +76,7 @@ class UserController extends Controller
             $request->validate([
                 'password' => 'required|confirmed'
             ]);
-            
+
             $user->password_hash = bcrypt($request->password);
             $user->save();
         }
@@ -81,7 +94,7 @@ class UserController extends Controller
     {
         // Delete user's tokens first to avoid foreign key constraint issues
         $user->tokens()->delete();
-        
+
         // Then delete the user
         $user->delete();
 
