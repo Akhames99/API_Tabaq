@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('unit')->nullable();
             $table->decimal('cost_per_unit', 10, 2)->nullable();
+            $table->string('image_url')->nullable();
             $table->timestamps();
         });
     }

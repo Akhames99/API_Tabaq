@@ -11,7 +11,7 @@ class Ingredient extends Model
 
     protected $table = 'ingredients';
 
-    protected $fillable = ['name', 'unit', 'cost_per_unit'];
+    protected $fillable = ['name', 'unit', 'cost_per_unit' ,'image_url'];
 
     public function recipes()
     {
