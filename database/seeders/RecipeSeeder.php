@@ -7,6 +7,25 @@ use App\Models\Recipe;
 
 class RecipeSeeder extends Seeder
 {
+    /**
+     * Convert Google Drive sharing links to direct image URLs
+     * 
+     * @param string $driveLink The original Google Drive sharing link
+     * @return string The direct image URL
+     */
+    private function convertDriveLink($driveLink) {
+        // Extract the file ID from the Google Drive URL
+        preg_match('/\/d\/(.+?)\//', $driveLink, $matches);
+        
+        if (isset($matches[1])) {
+            $fileId = $matches[1];
+            // Return the direct access URL format
+            return "https://drive.google.com/uc?export=view&id={$fileId}";
+        }
+        
+        return $driveLink; // Return original if pattern doesn't match
+    }
+
     public function run()
     {
         $recipes = [
@@ -14,7 +33,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'سباغيتي مع قطع اللحم المفروم',
                 'description' => '',
                 'price' => 90,
-                'image_url' => 'https://drive.google.com/file/d/1BoWCSq8fvJosfY3MWNHICE_cfIGzmVae/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1BoWCSq8fvJosfY3MWNHICE_cfIGzmVae/view?usp=sharing'),
                 'cuisine_type_id' => 2, // Western
                 'categories'=>[2]
             ],
@@ -22,7 +41,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'لحم بقري مشوي مع البطاطس والفلفل',
                 'description' => '',
                 'price' => 170,
-                'image_url' => 'https://drive.google.com/file/d/1wB-5H0dCWUVUdJW4GzCvSsEmVuXHyg-J/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1wB-5H0dCWUVUdJW4GzCvSsEmVuXHyg-J/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],
@@ -30,7 +49,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'لحم بقري مع فلفل رومي ملون',
                 'description' => '',
                 'price' => 190,
-                'image_url' => 'https://drive.google.com/file/d/1qNk63nA0kra_ygnPe8yrQ6ONBI9cDZYC/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1qNk63nA0kra_ygnPe8yrQ6ONBI9cDZYC/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Western
                 'categories'=>[2]
             ],
@@ -38,7 +57,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'لحم مشوي مع الفلفل (مطبخ آسيوي)',
                 'description' => '',
                 'price' => 120,
-                'image_url' => 'https://drive.google.com/file/d/1E9clqy73bc0ajvvT9P9s4cuaDqR7fr7X/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1E9clqy73bc0ajvvT9P9s4cuaDqR7fr7X/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],
@@ -46,7 +65,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'مكرونة بيني مع الدجاج وصلصة الطماطم',
                 'description' => '',
                 'price' => 65,
-                'image_url' => 'https://drive.google.com/file/d/1y_j0K_1tfmNs7UcHmgngLiBmspeTg-yr/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1y_j0K_1tfmNs7UcHmgngLiBmspeTg-yr/view?usp=sharing'),
                 'cuisine_type_id' => 2, // Western
                 'categories'=>[2,3]
             ],
@@ -54,7 +73,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'سمك دورادو مخبوز مع الليمون وسلطة جاهزة',
                 'description' => '',
                 'price' => 95,
-                'image_url' => 'https://drive.google.com/file/d/1DnkabobbBD3l9stPjMGb1I_V6Pn310R0/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1DnkabobbBD3l9stPjMGb1I_V6Pn310R0/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2,3]
             ],
@@ -62,7 +81,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'بطاطس مخبوزة مع البصل والثوم والأعشاب',
                 'description' => '',
                 'price' => 50,
-                'image_url' => 'https://drive.google.com/file/d/1_OgiIY2IkRtLwW8p7m71MJIs8o58PktL/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1_OgiIY2IkRtLwW8p7m71MJIs8o58PktL/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Western
                 'categories'=>[1,2,3]
             ],
@@ -70,7 +89,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'كبد دجاج مقلي مع صلصة التوت البري',
                 'description' => '',
                 'price' => 70,
-                'image_url' => 'https://drive.google.com/file/d/1qlESWwlx7wYnNEwkxv-J4SA_SkH9SFhv/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1qlESWwlx7wYnNEwkxv-J4SA_SkH9SFhv/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],
@@ -78,7 +97,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'أسياخ دجاج مع الفلفل الحلو والشبت',
                 'description' => '',
                 'price' => 105,
-                'image_url' => 'https://drive.google.com/file/d/1cfEL57dAJvzln94LKeszLDufMVpz-3J7/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1cfEL57dAJvzln94LKeszLDufMVpz-3J7/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Western
                 'categories'=>[2]
             ],
@@ -86,7 +105,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'مكرونة بيني مع الدجاج وصلصة الطماطم',
                 'description' => '',
                 'price' => 60,
-                'image_url' => 'https://drive.google.com/file/d/1muEnIa8y-JEmuo7Pl29WqXUEPLNyROlK/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1muEnIa8y-JEmuo7Pl29WqXUEPLNyROlK/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],
@@ -94,7 +113,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'كباب نباتي بالخضروات مع صلصة الكاجو والبابريكا',
                 'description' => '',
                 'price' => 120,
-                'image_url' => 'https://drive.google.com/file/d/1o6XigRwSENN01_mleeLD2atphmMb_pZA/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1o6XigRwSENN01_mleeLD2atphmMb_pZA/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],
@@ -102,7 +121,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'تورتيلا ملفوفة بالفلافل والسلطة',
                 'description' => '',
                 'price' => 80,
-                'image_url' => 'https://drive.google.com/file/d/1PPIVUKgyDvB9rxqg2lIR18Fy3hVnerYi/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1PPIVUKgyDvB9rxqg2lIR18Fy3hVnerYi/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[2]
             ],
@@ -114,7 +133,7 @@ class RecipeSeeder extends Seeder
 4. بردّي الأعشاش ثم احشّيها بالكريمة.
 5. زيّني كل قطعة بالفستق المجروش وبتلة الورد، وقدّميها فوراً.',
                 'price' => 60,
-                'image_url' => 'https://drive.google.com/file/d/151hP1mKPVItUtaQ_BvN9BenwIagnQCuw/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/151hP1mKPVItUtaQ_BvN9BenwIagnQCuw/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -126,7 +145,7 @@ class RecipeSeeder extends Seeder
 4. لتحضير السيرب، اغلي مكوناته معاً 5–7 دقائق حتى يثخن قليلاً، ثم صفيه من الليمون.
 5. انقعي القطع المقلية في السيرب الدافئ لبضع ثوانٍ ثم صفيها وقدّميها دافئة أو بدرجة حرارة الغرفة.',
                 'price' => 45,
-                'image_url' => 'https://drive.google.com/file/d/1BnPk6cLkd2esqYBksVJrjqCNbuiCksh5/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1BnPk6cLkd2esqYBksVJrjqCNbuiCksh5/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -138,7 +157,7 @@ class RecipeSeeder extends Seeder
 4. اخلطي الجبنة مع السكر البودرة، واملأي المخاريط ثم غمّسي أطرافها بالفستق.
 5. قدّميها طازجة مع رشة عسل أو سيرب حسب الرغبة.',
                 'price' => 50,
-                'image_url' => 'https://drive.google.com/file/d/1G7KANKBRtQYW-2dsJAbhmCK4T7nGH7tw/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1G7KANKBRtQYW-2dsJAbhmCK4T7nGH7tw/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -150,7 +169,7 @@ class RecipeSeeder extends Seeder
 4. اسقيها بالسيرب الدافئ مباشرة بعد الخروج من الفرن، ثم صفيها.
 5. قدّميها في قوالب ورقية ورشي فوقها الفستق والورد.',
                 'price' => 35,
-                'image_url' => 'https://drive.google.com/file/d/1wgkrO_B0338okRyE_NmRtdNF58ol6MZw/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1wgkrO_B0338okRyE_NmRtdNF58ol6MZw/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -161,7 +180,7 @@ class RecipeSeeder extends Seeder
 3. انقليها مباشرة إلى السيرب الدافئ أو اسقيها بالعسل.
 4. رتبيها في طبق ورشي فوقها الفستق المطحون وقدّميها.',
                 'price' => 55,
-                'image_url' => 'https://drive.google.com/file/d/1LxLohXFlPtEsmoE3sOib8bq-RgCSHn8j/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1LxLohXFlPtEsmoE3sOib8bq-RgCSHn8j/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -172,7 +191,7 @@ class RecipeSeeder extends Seeder
 3. اخبزيه على 180°م لمدة 25–30 دقيقة حتى يحمر القعر.
 4. اسقيه فوراً بالسيرب الدافئ واتركيه يمتصه قبل التقطيع.',
                 'price' => 65,
-                'image_url' => 'https://drive.google.com/file/d/1iTKSc1dx8yQJfi6lo49SfOBf23_6SABR/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1iTKSc1dx8yQJfi6lo49SfOBf23_6SABR/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -184,7 +203,7 @@ class RecipeSeeder extends Seeder
 4. اخبزي على 180°م لمدة 20–25 دقيقة حتى ينتفخ السطح ويحمر قليلاً.
 5. قدّميها دافئة مع رشة مكسرات إضافية.',
                 'price' => 70,
-                'image_url' => 'https://drive.google.com/file/d/1e3cI91FZk1HDPkK8e0fj3F52rTX2eexp/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1e3cI91FZk1HDPkK8e0fj3F52rTX2eexp/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -196,7 +215,7 @@ class RecipeSeeder extends Seeder
 4. أخرجيها وصبي فوقها السيرب الدافئ مباشرة.
 5. زينيها بالفستق المطحون، وقطّعيها وتناوليها دافئة.',
                 'price' => 60,
-                'image_url' => 'https://drive.google.com/file/d/1XDiOk8XYxiOpavJfFu76h0KDs_kRMw8W/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1XDiOk8XYxiOpavJfFu76h0KDs_kRMw8W/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -207,7 +226,7 @@ class RecipeSeeder extends Seeder
 3. أضيفي السكر واطهي 5 دقائق إضافية.
 4. قدميه ساخناً أو بارداً مع ما ترغبين من التزيين.',
                 'price' => 50,
-                'image_url' => 'https://drive.google.com/file/d/1YMykzDzTTbZaeyCAZsU8aORdpBRLjBHH/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1YMykzDzTTbZaeyCAZsU8aORdpBRLjBHH/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -218,7 +237,7 @@ class RecipeSeeder extends Seeder
 3. رصي المثلثات في صينية، ادهنّي السطح بالزبدة، واخبزيها على 180°م لمدة 20 دقيقة حتى تكتسب لوناً ذهبياً.
 4. اسقيها بالسيرب الدافئ فور خروجها من الفرن، ورشي فوقها فستقاً مطحوناً.',
                 'price' => 70,
-                'image_url' => 'https://drive.google.com/file/d/1s9afthHENN2JvHmb6F2XVc1gRXsCpGXe/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1s9afthHENN2JvHmb6F2XVc1gRXsCpGXe/view?usp=sharing'),
                 'cuisine_type_id' => 1, // Eastern
                 'categories'=>[4]
             ],
@@ -230,7 +249,7 @@ class RecipeSeeder extends Seeder
 4. ارفعي المزيج من الحرارة، دعكه يبرد قليلًا ثم أضيفي عصير البرتقال وحرّكي.
 5. صبي الخليط في أكواب وقدّميها باردة بعد التبريد في الثلاجة 4 ساعات. زيني بشرائح البرتقال.',
                 'price' => 65,
-                'image_url' => 'https://drive.google.com/file/d/151hP1mKPVItUtaQ_BvN9BenwIagnQCuw/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/151hP1mKPVItUtaQ_BvN9BenwIagnQCuw/view?usp=sharing'),
                 'cuisine_type_id' => 2,
                 'categories'=>[4]
             ],
@@ -243,7 +262,7 @@ class RecipeSeeder extends Seeder
 5. رصي القطع في صينية بدون دهن، واخبزيها على 170°م لمدة 15–18 دقيقة حتى تثبت دون تحمير زائد.
 6. بردّيها ورشي فوقها سكر بودرة قبل التقديم.',
                 'price' => 50,
-                'image_url' => 'https://drive.google.com/file/d/1uw6hBFqiJZjY_7cCxBXXM3TVqUYn7wxf/view?usp=sharing',
+                'image_url' => $this->convertDriveLink('https://drive.google.com/file/d/1uw6hBFqiJZjY_7cCxBXXM3TVqUYn7wxf/view?usp=sharing'),
                 'cuisine_type_id' => 2,
                 'categories'=>[4]
             ],
@@ -251,8 +270,8 @@ class RecipeSeeder extends Seeder
 
         foreach ($recipes as $recipeData) {
             $categories = $recipeData['categories'] ?? [];
-        
-            // 🚀 IMPORTANT: remove 'categories' before calling create()
+            
+            // Remove 'categories' before calling create()
             unset($recipeData['categories']);
         
             $recipe = Recipe::create($recipeData);
