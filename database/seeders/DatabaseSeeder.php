@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,10 +21,12 @@ class DatabaseSeeder extends Seeder
 
         // Call other seeders
         $this->call([
+            UserSeeder::class,
             CategorySeeder::class,
             CuisineTypeSeeder::class,
             RecipeSeeder::class,
-            IngredientSeeder::class
+            IngredientSeeder::class,
+            ReviewSeeder::class
             // Add RecipeSeeder later if needed
         ]);
     }

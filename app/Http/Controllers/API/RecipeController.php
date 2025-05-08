@@ -25,10 +25,12 @@ class RecipeController extends RoutingController
 
     public function show(Recipe $recipe): JsonResponse
     {
-        $recipe->load(['categories', 'cuisineType']);
+        $recipe->load(['categories', 'cuisineType', 'ingredients' , 'reviews']);
+
+        
         return response()->json([
             'success' => true,
-            'data' => $recipe->load('ingredients')
+            'data' => $recipe
         ]);
     }
 

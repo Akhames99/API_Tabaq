@@ -49,15 +49,21 @@ class OrderController extends RoutingController
         foreach ($recipe->ingredients as $ingredient) {
             $ingredientsCost += $ingredient->cost_per_unit * $ingredient->pivot->quantity;
         }
+        
+        // Multiply ingredients cost by quantity
+        $ingredientsCost = $ingredientsCost * $validatedData['quantity'];
+        
+        // Add delivery fee to ingredients cost
+        $ingredientsCostWithFee = $ingredientsCost + self::DELIVERY_FEE;
 
-        // Calculate total price (recipe price + delivery fee)
+        // Calculate total price (recipe price * quantity + delivery fee)
         $totalPrice = ($recipe->price * $validatedData['quantity']) + self::DELIVERY_FEE;
 
         // Create order
         $order = Order::create([
             'user_id' => Auth::id(),
             'recipe_id' => $validatedData['recipe_id'],
-            'ingredients_cost' => $ingredientsCost,
+            'ingredients_cost' => $ingredientsCostWithFee,
             'quantity' => $validatedData['quantity'],
             'total_price' => $totalPrice,
         ]);
@@ -104,7 +110,7 @@ class OrderController extends RoutingController
         }
 
         $validatedData = $request->validate([
-            'recipe_id' => 'sometimes|required|exists:recipes,id', // Fixed: changed "recipes.id" to "recipes,id"
+            'recipe_id' => 'sometimes|required|exists:recipes,id',
             'quantity' => 'sometimes|required|integer|min:1',
         ]);
 
@@ -116,15 +122,21 @@ class OrderController extends RoutingController
             // Calculate ingredients cost
             $ingredientsCost = 0;
             foreach ($recipe->ingredients as $ingredient) {
-            $ingredientsCost += $ingredient->cost_per_unit * $ingredient->pivot->quantity;
+                $ingredientsCost += $ingredient->cost_per_unit * $ingredient->pivot->quantity;
             }
             
             $quantity = $validatedData['quantity'] ?? $order->quantity;
             
-            // Calculate total price (recipe price + delivery fee)
+            // Multiply ingredients cost by quantity
+            $ingredientsCost = $ingredientsCost * $quantity;
+            
+            // Add delivery fee to ingredients cost
+            $ingredientsCostWithFee = $ingredientsCost + self::DELIVERY_FEE;
+            
+            // Calculate total price (recipe price * quantity + delivery fee)
             $totalPrice = ($recipe->price * $quantity) + self::DELIVERY_FEE;
             
-            $validatedData['ingredients_cost'] = $ingredientsCost;
+            $validatedData['ingredients_cost'] = $ingredientsCostWithFee;
             $validatedData['total_price'] = $totalPrice;
         }
 
@@ -152,8 +164,6 @@ class OrderController extends RoutingController
         }
 
         $order->delete();
-        return ['message' => 'your order is cancelled.'];
-
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Your order is cancelled.']);
     }
 }

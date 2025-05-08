@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('recipe_id')->constrained()->onDelete('cascade');
-            $table->decimal('ingredients_cost', 10, 2)->comment('Total cost of ingredients only');
+            $table->decimal('ingredients_cost', 10, 2)->comment('Total cost of ingredients only + $30 delivery fee');
             $table->integer('quantity');
             $table->decimal('total_price', 10, 2)->comment('Recipe price + $30 delivery fee');
             $table->timestamps();

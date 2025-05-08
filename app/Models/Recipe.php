@@ -15,6 +15,8 @@ class Recipe extends Model
     protected $table = 'recipes';
 
     protected $fillable = ['name', 'description', 'price', 'image_url', 'cuisine_type_id'];
+    
+    protected $appends = ['ingredients_cost', 'average_rating'];
 
     // Many-to-many relationship with categories
     public function categories(): BelongsToMany
@@ -40,6 +42,9 @@ class Recipe extends Model
         return $this->hasMany(Review::class, 'recipe_id');
     }
 
+    /**
+     * Calculate average rating across all reviews
+     */
     public function getAverageRatingAttribute()
     {
         if ($this->reviews->isEmpty()) {
@@ -48,5 +53,19 @@ class Recipe extends Model
         
         return round($this->reviews->avg('rating'), 1);
     }
-
+    
+    /**
+     * Get the total cost of ingredients for this recipe
+     */
+    public function getIngredientsCostAttribute()
+    {
+        // Calculate the total cost based on ingredients and their quantities
+        $totalCost = 0;
+        
+        foreach ($this->ingredients as $ingredient) {
+            $totalCost += $ingredient->cost_per_unit * $ingredient->pivot->quantity;
+        }
+        
+        return $totalCost;
+    }
 }
