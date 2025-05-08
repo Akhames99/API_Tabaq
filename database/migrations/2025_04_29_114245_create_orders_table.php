@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('ingredients_cost', 10, 2)->comment('Total cost of ingredients only + $30 delivery fee');
             $table->integer('quantity');
             $table->decimal('total_price', 10, 2)->comment('Recipe price + $30 delivery fee');
+            $table->boolean('is_ingredients_only')->default(false)->comment('When true, ingredients_cost goes to payment; when false, total_price goes to payment');
             $table->timestamps();
         });
     }

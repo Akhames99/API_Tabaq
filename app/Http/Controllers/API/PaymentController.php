@@ -44,7 +44,9 @@ class PaymentController extends RoutingController
         if (!$total_price) {
             if ($request->order_id) {
                 $order = Order::findOrFail($request->order_id);
-                $total_price = $order->ingredients_cost;
+                
+                // Determine which price to use based on is_ingredients_only flag
+                $total_price = $order->is_ingredients_only ? $order->ingredients_cost : $order->total_price;
             } else {
                 return response()->json([
                     'success' => false,
@@ -132,6 +134,14 @@ class PaymentController extends RoutingController
                 'errors' => $validator->errors()
             ], 422);
         }
+        
+        // If order_id is being updated and total_price isn't provided, recalculate it
+        if ($request->has('order_id') && !$request->has('total_price') && $request->order_id) {
+            $order = Order::findOrFail($request->order_id);
+            $request->merge([
+                'total_price' => $order->is_ingredients_only ? $order->ingredients_cost : $order->total_price
+            ]);
+        }
 
         $payment->update($request->all());
 
@@ -180,6 +190,28 @@ class PaymentController extends RoutingController
         return response()->json([
             'success' => true,
             'data' => PaymentResource::collection($payments)
+        ]);
+    }
+    
+    /**
+     * Calculate the payment amount for an order before creating the payment.
+     * This can be used in the frontend to show the user the amount they will be charged.
+     *
+     * @param int $orderId
+     * @return \Illuminate\Http\Response
+     */
+    public function calculatePaymentForOrder($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        $amount = $order->is_ingredients_only ? $order->ingredients_cost : $order->total_price;
+        
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'order_id' => $orderId,
+                'payment_amount' => $amount,
+                'is_ingredients_only' => $order->is_ingredients_only
+            ]
         ]);
     }
 }

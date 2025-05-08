@@ -35,6 +35,7 @@ class PaymentRequest extends FormRequest
             'phone_number' => 'nullable|string',
             'address' => 'required|string',
             'total_price' => 'nullable|numeric|min:0',
+            'is_ingredients_only' => 'sometimes|boolean'
         ];
     }
 

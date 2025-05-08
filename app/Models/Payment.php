@@ -44,7 +44,8 @@ class Payment extends Model
     }
     
     /**
-     * Create a payment for an order using the recipe's total price
+     * Create a payment for an order using either the recipe's total price or ingredients cost
+     * based on the is_ingredients_only flag
      * 
      * @param Order $order The order to create a payment for
      * @param array $paymentData Additional payment data
@@ -52,11 +53,15 @@ class Payment extends Model
      */
     public static function createFromOrder(Order $order, array $paymentData)
     {
-        // Get the recipe from the order
-        $recipe = $order->recipe;
+        // Determine which amount to use based on is_ingredients_only flag
+        if ($order->is_ingredients_only) {
+            $paymentData['total_price'] = $order->ingredients_cost;
+        } else {
+            // Get the recipe from the order and use its total price
+            $recipe = $order->recipe;
+            $paymentData['total_price'] = $recipe->total_price;
+        }
         
-        // Set the total_price to the recipe's total_price (price + fee)
-        $paymentData['total_price'] = $recipe->total_price;
         $paymentData['order_id'] = $order->id;
         
         // If user_id isn't provided but the order has one, use it
@@ -69,11 +74,24 @@ class Payment extends Model
     }
     
     /**
+     * Calculate the total price for an order based on is_ingredients_only flag
+     * This can be used before creating a payment to show the user the total
+     * 
+     * @param Order $order
+     * @return float
+     */
+    public static function calculateTotalPriceForOrder(Order $order)
+    {
+        return $order->is_ingredients_only ? $order->ingredients_cost : $order->recipe->total_price;
+    }
+    
+    /**
      * Calculate the total price for a recipe
      * This can be used before creating a payment to show the user the total
      * 
      * @param Recipe $recipe
      * @return float
+     * @deprecated Use calculateTotalPriceForOrder instead
      */
     public static function calculateTotalPriceForRecipe(Recipe $recipe)
     {

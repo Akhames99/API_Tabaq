@@ -39,40 +39,40 @@ class OrderController extends RoutingController
         $validatedData = $request->validate([
             'recipe_id' => 'required|exists:recipes,id',
             'quantity' => 'required|integer|min:1',
+            'is_ingredients_only' => 'sometimes|boolean',
         ]);
 
-        // Get recipe with its ingredients
+        $isIngredientsOnly = $validatedData['is_ingredients_only'] ?? false;
+
         $recipe = Recipe::with('ingredients.recipes')->findOrFail($validatedData['recipe_id']);
-        
-        // Calculate ingredients cost
+
         $ingredientsCost = 0;
         foreach ($recipe->ingredients as $ingredient) {
             $ingredientsCost += $ingredient->cost_per_unit * $ingredient->pivot->quantity;
         }
-        
-        // Multiply ingredients cost by quantity
-        $ingredientsCost = $ingredientsCost * $validatedData['quantity'];
-        
-        // Add delivery fee to ingredients cost
+
+        $quantity = $validatedData['quantity'];
+        $ingredientsCost = $ingredientsCost * $quantity;
         $ingredientsCostWithFee = $ingredientsCost + self::DELIVERY_FEE;
 
-        // Calculate total price (recipe price * quantity + delivery fee)
-        $totalPrice = ($recipe->price * $validatedData['quantity']) + self::DELIVERY_FEE;
+        $totalPrice = $isIngredientsOnly
+            ? $ingredientsCostWithFee
+            : ($recipe->price * $quantity) + self::DELIVERY_FEE;
 
-        // Create order
         $order = Order::create([
             'user_id' => Auth::id(),
             'recipe_id' => $validatedData['recipe_id'],
             'ingredients_cost' => $ingredientsCostWithFee,
-            'quantity' => $validatedData['quantity'],
+            'quantity' => $quantity,
             'total_price' => $totalPrice,
+            'is_ingredients_only' => $isIngredientsOnly,
         ]);
 
-        // Load recipe relationship
         $order->load('recipe');
 
         return response()->json($order, 201);
     }
+
 
     /**
      * Display the specified order.
@@ -118,33 +118,33 @@ class OrderController extends RoutingController
         if (isset($validatedData['recipe_id']) || isset($validatedData['quantity'])) {
             $recipe = Recipe::with('ingredients.recipes')
                 ->findOrFail($validatedData['recipe_id'] ?? $order->recipe_id);
-            
+
             // Calculate ingredients cost
             $ingredientsCost = 0;
             foreach ($recipe->ingredients as $ingredient) {
                 $ingredientsCost += $ingredient->cost_per_unit * $ingredient->pivot->quantity;
             }
-            
+
             $quantity = $validatedData['quantity'] ?? $order->quantity;
-            
+
             // Multiply ingredients cost by quantity
             $ingredientsCost = $ingredientsCost * $quantity;
-            
+
             // Add delivery fee to ingredients cost
             $ingredientsCostWithFee = $ingredientsCost + self::DELIVERY_FEE;
-            
+
             // Calculate total price (recipe price * quantity + delivery fee)
             $totalPrice = ($recipe->price * $quantity) + self::DELIVERY_FEE;
-            
+
             $validatedData['ingredients_cost'] = $ingredientsCostWithFee;
             $validatedData['total_price'] = $totalPrice;
         }
 
         $order->update($validatedData);
-        
+
         // Reload the order with recipe
         $order->load('recipe');
-        
+
         return response()->json($order);
     }
 
