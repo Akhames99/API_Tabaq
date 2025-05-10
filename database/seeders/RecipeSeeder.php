@@ -15,7 +15,7 @@ class RecipeSeeder extends Seeder
                 'name' => 'سباغيتي مع قطع اللحم المفروم',
                 'description' => '',
                 'price' => 90,
-                'image_url' => 'http://127.0.0.1\8000\storage\app\public\images\beef-spaghetti-there-are-plenty-tomatoes-chopped-beef.png',
+                'image_url' => 'http://127.0.0.1:8000/storage/images/beef.png',
                 'cuisine_type_id' => 2, // Western
                 'categories'=>[2]
             ],
