@@ -13,7 +13,8 @@ class Order extends Model
         'user_id',
         'recipe_id',
         'ingredients_cost',
-        'quantity',
+        'recipe_quantity',
+        'ingredients_quantity',
         'total_price',
     ];
 
