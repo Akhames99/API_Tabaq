@@ -55,7 +55,7 @@ class RecipeSeeder extends Seeder
 أعيدي اللحم إلى المقلاة وقلّبي مع الخضار لبضع ثوانٍ.
 
 قدّمي الطبق ساخناً ويفضّل على طبق حديدي ساخن كما في الصورة.]',
-                'price' => 170,
+                'price' => 260,
                 'image_url' => 'http://127.0.0.1\8000\storage\app\public\images\beef-meat-roast-with-potato-pepper.png',
                 'cuisine_type_id' => 1, // Eastern
                 'categories' => [2]
@@ -71,7 +71,7 @@ class RecipeSeeder extends Seeder
 إضافة الخضار: أضف البصل والفليفلة، وقلّب حتى تطرى قليلاً مع الاحتفاظ بقرمشتها.
 
 الدمج والتقديم: أضف البطاطا المطهية للمقلاة، قلب المكونات معًا لدقيقة إضافية، ثم قدّم الطبق مباشرة]',
-                'price' => 190,
+                'price' => 250,
                 'image_url' => 'http://127.0.0.1\8000\storage\app\public\images\beef-with-colorful-bell-peppers-wooden-table.png',
                 'cuisine_type_id' => 1, // Western
                 'categories' => [2]
